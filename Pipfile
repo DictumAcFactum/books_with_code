@@ -9,6 +9,7 @@ verify_ssl = true
 django = "*"
 pillow = "*"
 django-rest-framework = "*"
+httpie = "*"
 
 [requires]
 python_version = "3.8"
