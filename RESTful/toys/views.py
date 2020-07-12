@@ -42,12 +42,12 @@ def toy_detail(request, pk):
         toy_serializer = ToySerializer(toy)
         return JSONResponse(toy_serializer.data)
 
-    elif request.method == 'POST':
+    elif request.method == 'PUT':
         toy_data = JSONParser().parse(request)
-        toy_serializer = ToySerializer(data=toy_data)
+        toy_serializer = ToySerializer(toy, data=toy_data)
         if toy_serializer.is_valid():
             toy_serializer.save()
-            return JSONResponse(toy_serializer.data, status=status.HTTP_201_CREATED)
+            return JSONResponse(toy_serializer.data)
         return JSONResponse(toy_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
