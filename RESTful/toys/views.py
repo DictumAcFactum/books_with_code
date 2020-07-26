@@ -8,8 +8,9 @@ from .serializers import ToySerializer
 
 @api_view(['GET', 'POST'])
 def toy_list(request):
+    """ Description here """
     if request.method == 'GET':
-        toys = Toy.objects.all()
+        toys = Toy.objects.order_by('-created')
         toys_serializer = ToySerializer(toys, many=True)
         return Response(toys_serializer.data)
 
