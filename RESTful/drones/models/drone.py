@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Drone(models.Model):
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=250, unique=True)
     drone_category = models.ForeignKey(
         'drones.DroneCategory',
         on_delete=models.CASCADE)

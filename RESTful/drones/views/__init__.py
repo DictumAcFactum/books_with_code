@@ -8,6 +8,7 @@ from .competition_views import CompetitionDetail, CompetitionList
 
 
 class ApiRoot(GenericAPIView):
+    """Base api endpoint"""
     name = 'api-root'
 
     def get(self, request, *args, **kwargs):

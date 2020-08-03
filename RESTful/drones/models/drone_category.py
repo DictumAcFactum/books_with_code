@@ -2,7 +2,7 @@ from django.db import models
 
 
 class DroneCategory(models.Model):
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=250, unique=True)
 
     class Meta:
         ordering = ('name',)

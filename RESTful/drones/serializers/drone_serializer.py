@@ -9,6 +9,7 @@ class DroneSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Drone
         fields = (
+            'pk',
             'url',
             'name',
             'drone_category',
