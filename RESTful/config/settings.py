@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     # 3rd party
     'rest_framework',
+    'django_filters',
 
     'toys.apps.ToysConfig',
     'drones.apps.DronesConfig',
@@ -127,6 +128,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS':
-    'drones.pagination.LimitOffsetPaginationWithUpperBound',
-    'PAGE_SIZE': 4
+        'drones.pagination.LimitOffsetPaginationWithUpperBound',
+    'PAGE_SIZE': 4,
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.OrderingFilter',
+        'rest_framework.filters.SearchFilter',
+    ),
 }
