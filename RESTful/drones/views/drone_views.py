@@ -1,5 +1,7 @@
 from rest_framework import generics
+from rest_framework import permissions
 
+from ..permissions import IsCurrentUserOwnerOrReadOnly
 from ..models import DroneCategory, Drone
 from ..serializers import DroneCategorySerializer, DroneSerializer
 
@@ -34,9 +36,20 @@ class DroneList(generics.ListCreateAPIView):
         'name',
         'manufacturing_date',
     )
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        IsCurrentUserOwnerOrReadOnly,
+    )
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 
 class DroneDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Drone.objects.all()
     serializer_class = DroneSerializer
     name = 'drone-detail'
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        IsCurrentUserOwnerOrReadOnly,
+    )
