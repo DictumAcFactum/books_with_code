@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     # 3rd party
     'rest_framework',
     'django_filters',
+    'rest_framework.authtoken',
 
     'toys.apps.ToysConfig',
     'drones.apps.DronesConfig',
