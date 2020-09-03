@@ -1,5 +1,6 @@
 from rest_framework import generics
 from rest_framework import permissions
+from rest_framework.throttling import ScopedRateThrottle
 
 from ..permissions import IsCurrentUserOwnerOrReadOnly
 from ..models import DroneCategory, Drone
@@ -22,6 +23,8 @@ class DroneCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class DroneList(generics.ListCreateAPIView):
+    throttle_scope = 'drones'
+    throttle_classes = (ScopedRateThrottle,)
     queryset = Drone.objects.all()
     serializer_class = DroneSerializer
     name = 'drone-list'
@@ -46,6 +49,8 @@ class DroneList(generics.ListCreateAPIView):
 
 
 class DroneDetail(generics.RetrieveUpdateDestroyAPIView):
+    throttle_scope = 'drones'
+    throttle_classes = (ScopedRateThrottle,)
     queryset = Drone.objects.all()
     serializer_class = DroneSerializer
     name = 'drone-detail'
