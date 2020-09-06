@@ -15,11 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf.urls import include
+from django.conf.urls import include, url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('toys.urls')),
-    path('', include('drones.urls')),
-    path('api-auth/', include('rest_framework.urls'))
+    url(r'^v1/', include('drones.urls', namespace='v1')),
+    url(r'^v1/api-auth/', include('rest_framework.urls', namespace='rest_framework_v1')),
+    url(r'^v2/', include('drones.v2.urls', namespace='v2')),
+    url(r'^v2/api-auth/', include('rest_framework.urls', namespace='rest_framework_v2')),
 ]

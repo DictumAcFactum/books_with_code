@@ -1,6 +1,8 @@
 from django.conf.urls import url
 from . import views
 
+app_name = 'drones'
+
 urlpatterns = [
     url(r'^drone-categories/$',
         views.DroneCategoryList.as_view(),
