@@ -13,3 +13,4 @@ class Competition(models.Model):
 
     class Meta:
         ordering = ('-distance_in_feet',)
+        app_label = 'drones'
