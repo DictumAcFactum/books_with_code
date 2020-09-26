@@ -4,7 +4,11 @@ class TestCase():
     def __init__(self, name):
         self.name = name
 
+    def set_up(self):
+        raise NotImplementedError
+
     def run(self):
+        self.set_up()
         method = getattr(self, self.name)
         method()
 
@@ -13,8 +17,11 @@ class WasRun(TestCase):
     """ Test case that can check if method `name` was run """
 
     def __init__(self, name):
-        self.was_run = None
         super().__init__(name)
+
+    def set_up(self):
+        self.was_run = None
+        self.was_set_up = 1
 
     def test_method(self):
         self.was_run = 1
@@ -22,12 +29,18 @@ class WasRun(TestCase):
 
 class TestCaseTest(TestCase):
     """ Testing TestCase class """
+    def set_up(self):
+        self.test = WasRun('test_method')
 
     def test_running(self):
-        test = WasRun('test_method')
-        assert not test.was_run
-        test.run()
-        assert test.was_run
+        self.test.run()
+        assert self.test.was_run
+
+    def test_set_up(self):
+        self.test.run()
+        assert self.test.was_set_up
+
 
 
 TestCaseTest('test_running').run()
+TestCaseTest('test_set_up').run()
