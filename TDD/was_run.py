@@ -1,44 +1,33 @@
-class TestCase:
+class TestCase():
+    """ Base test case method """
+
     def __init__(self, name):
         self.name = name
 
-    def set_up(self):
-        pass
-
     def run(self):
-        self.set_up()
         method = getattr(self, self.name)
         method()
 
 
 class WasRun(TestCase):
-    """ class checks if method {% name %} was run """
-    def __init__(self, name):
-        super().__init__(name)
-        self.was_run = False
+    """ Test case that can check if method `name` was run """
 
-    def set_up(self):
-        self.was_run = False
-        self.was_set_up = True
+    def __init__(self, name):
+        self.was_run = None
+        super().__init__(name)
 
     def test_method(self):
-        self.was_run = True
+        self.was_run = 1
 
 
 class TestCaseTest(TestCase):
-    def set_up(self):
-        self.test = WasRun('test_method')
+    """ Testing TestCase class """
 
     def test_running(self):
-        assert not self.test.was_run
-        self.test.run()
-        assert self.test.was_run
-
-    def test_set_up(self):
-        self.test.run()
-        assert self.test.was_set_up
+        test = WasRun('test_method')
+        assert not test.was_run
+        test.run()
+        assert test.was_run
 
 
-if __name__ == '__main__':
-    TestCaseTest('test_running').run()
-    TestCaseTest('test_set_up').run()
+TestCaseTest('test_running').run()
