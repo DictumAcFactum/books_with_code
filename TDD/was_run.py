@@ -1,4 +1,15 @@
-class TestCase():
+class TestResult:
+    def __init__(self):
+        self.run_count = 0
+
+    def test_started(self):
+        self.run_count += 1
+
+    def summary(self):
+        return f'{self.run_count} run, 0 failed'
+
+
+class TestCase:
     """ Base test case method """
 
     def __init__(self, name):
@@ -11,9 +22,12 @@ class TestCase():
         pass
 
     def run(self):
+        result = TestResult()
+        result.test_started()
         self.set_up()
         exec(f'self.{self.name}()')
         self.tear_down()
+        return result
 
 
 class WasRun(TestCase):
@@ -31,6 +45,9 @@ class WasRun(TestCase):
         self.tear_down()
         self.log += ' tearDown'
 
+    def test_broken_method(self):
+        raise Exception
+
 
 class TestCaseTest(TestCase):
     """ Testing TestCase class """
@@ -40,5 +57,17 @@ class TestCaseTest(TestCase):
         test.run()
         assert ('setUp test_method tearDown' == test.log)
 
+    def test_result(self):
+        test = WasRun('test_method')
+        result = test.run()
+        assert '1 run, 0 failed' == result.summary()
+
+    def test_failed_result(self):
+        test = WasRun('test_broken_method')
+        result = test.run()
+        assert '1 run, 1 failed' == result.summary()
+
 
 TestCaseTest('test_template_method').run()
+TestCaseTest('test_result').run()
+TestCaseTest('test_failed_result').run()
