@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "books-with-code"
+version = "0.1.0"
+description = ""
+authors = ["Alexander"]
+readme = "README.md"
+packages = [{include = "books_with_code"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^5.0"
+djangorestframework = "^3.14.0"
+httpie = "^3.2.2"
+pillow = "^10.1.0"
+
+[tool.poetry.group.dev.dependencies]
+Django = "^5.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
